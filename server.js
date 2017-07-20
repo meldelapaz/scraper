@@ -5,10 +5,6 @@ var request = require('request');
 var cheerio = require('cheerio');
 var mongoose = require('mongoose');
 
-// Requiring our not and dogs models
-var Note = require("./models/note.js");
-var Article = require("./models/dogs.js");
-
 // Set mongoose to leverage built in JavaScript ES6 Promises
 mongoose.Promise = Promise;
 
@@ -31,13 +27,22 @@ app.use(bodyParser.json({type: 'application/vnd.api+json'}));
 app.use(express.static('app/public'));
 
 // Database configuration with mongoose
-mongoose.connect('mongodb://localhost:27017/HomeScraper', { useMongoClient: true });
+mongoose.connect('mongodb://localhost:27017/dogscraper', { useMongoClient: true });
 var db = mongoose.connection;
 
 // Show any mongoose errors
 db.on("error", function(error) {
     console.log("Mongoose Error: ", error);
 });
+
+// Show successful mongoose connection
+db.once("open", function() {
+    console.log("Mongoose connection successful.");
+});
+
+// requiring my  controller js file
+var router = require('./controllers/controller.js');
+app.use('/', router);
 
 // Listening to the port
 app.listen(PORT, function () {
