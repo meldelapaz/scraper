@@ -34,7 +34,8 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"));
 
 const dbConnectString = process.env.MONGODB_URI ||
-    "mongodb://localhost/business";
+                        process.env.MONGOHQ_URL ||
+                        "mongodb://localhost/business";
 //Heroku deployment
 //mongoose.connect("mongodb://heroku_zb1tf5d9:jeukiiegif5e9ouv0gft60m91l@ds117093.mlab.com:17093/heroku_zb1tf5d9");
 
