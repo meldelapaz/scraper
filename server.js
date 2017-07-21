@@ -16,6 +16,10 @@ var cheerio = require("cheerio");
 // Set mongoose to leverage built in JavaScript ES6 Promises
 mongoose.Promise = Promise;
 
+if (process.env.JAWSDB_URL) {
+
+}
+
 
 // Initialize Express
 var app = express();
@@ -29,8 +33,13 @@ app.use(bodyParser.urlencoded({
 // Make public a static dir
 app.use(express.static("public"));
 
+const dbConnectString = process.env.MONGODB_URI ||
+    "mongodb://localhost/business";
+//Heroku deployment
+//mongoose.connect("mongodb://heroku_zb1tf5d9:jeukiiegif5e9ouv0gft60m91l@ds117093.mlab.com:17093/heroku_zb1tf5d9");
+
 // Database configuration with mongoose
-mongoose.connect("mongodb://localhost/business");
+mongoose.connect(dbConnectString);
 var db = mongoose.connection;
 
 // Show any mongoose errors
